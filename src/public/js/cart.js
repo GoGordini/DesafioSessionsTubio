@@ -1,6 +1,6 @@
 const addToCart = (_id) => {
     const amount = {"quantity":1};
-    fetch(`/api/carts/6545642cca55f5b5ab6ea0d6/products/${_id}`, {
+    fetch(`/api/carts/656e5df2ca10114c86b3e600/products/${_id}`, {
     method: 'PUT',
     body: JSON.stringify(amount),
     headers: {
