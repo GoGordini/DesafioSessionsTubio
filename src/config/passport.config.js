@@ -1,10 +1,12 @@
 import passport from 'passport';
 import local from 'passport-local'; //uso estrategia local
 import usersModel from '../dao/dbManager/models/users.model.js';
-import { createHash, isValidPassword } from '../utils.js';
+import { createHash, isValidPassword,cartPath } from '../utils.js';
 import GitHubStrategy from 'passport-github2';
-
+import CartManager from "../dao/dbManager/carts.manager.js";
 //local es autenticacion con usuario y contraseña
+
+const cartManager = new CartManager(cartPath);
 const LocalStrategy = local.Strategy;
 
 // const initializePassport = () => {
@@ -68,6 +70,8 @@ const initializePassport = () => {
                     // }
             //     emails: [{value: 'ap@hotmail.com'}]
             // }
+            const carrito = await cartManager.save();
+            
             const email = profile.emails[0].value; //en profile llega un atributo que se llama emails: emails: [{value: 'ap@hotmail.com'}]
             const user = await usersModel.findOne({ email });
 
@@ -78,6 +82,7 @@ const initializePassport = () => {
                     last_name: ' ', //no viene de github
                     age: 5000, //no viene de github, pongo algo por defecto.
                     email,
+                    cart: carrito._id,
                     password: ' ' //no la necesito con este mecanismo de aut, por eso seteo vacío.
                 }
 
@@ -98,7 +103,7 @@ passport.use('register', new LocalStrategy({ //segundo parámetro es la estrateg
         usernameField: 'email' //porque no tenemos un username sino un email
     }, async (req, username, password, done) => {
         try {
-            const { first_name, last_name, age } = req.body; //obvio email y password porque ya los tengo de dos líneas antes
+            const { first_name, last_name, age, cart } = req.body; //obvio email y password porque ya los tengo de dos líneas antes
             if (!first_name|| !last_name || !username || !age || !password) {
                 return done(null,false);
             }
@@ -114,6 +119,7 @@ passport.use('register', new LocalStrategy({ //segundo parámetro es la estrateg
                 email: username,
                 age,
                 password: createHash(password),
+                cart,
                 role: username==="adminCoder@coder.com"? ("admin") : ("user")
             }
 
