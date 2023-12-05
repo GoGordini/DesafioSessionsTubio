@@ -15,13 +15,13 @@ form.addEventListener('submit', async (e) => {
             'Content-Type': 'application/json'
         }
     });
-    console.log(responseCart);
+    //console.log(responseCart);
     if(responseCart.ok){
         const carrito = await responseCart.json();
         obj.cart=carrito.payload._id;
-        console.log(obj);
+        //console.log(obj);
     data.forEach((value, key) => obj[key] = value);
-    console.log(obj);
+    //console.log(obj);
     const responseUser= await fetch('/api/sessions/register', {
         method: 'POST',
         body: JSON.stringify(obj),
@@ -29,7 +29,7 @@ form.addEventListener('submit', async (e) => {
             'Content-Type': 'application/json'
         }
     });
-    console.log(responseUser);
+    //console.log(responseUser);
        if (responseUser.ok) { //si el registro fue OK, volverá un 201, entonces redirijo al form de login.
             window.location.replace('/'); 
         }

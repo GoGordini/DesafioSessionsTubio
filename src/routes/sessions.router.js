@@ -21,6 +21,7 @@ router.post('/login', passport.authenticate('login', { failureRedirect: 'fail-lo
         last_name: req.user.last_name,
         email: req.user.email,
         age: req.user.age,
+        cart: req.user.cart,
         isAdmin:(req.user.email=="adminCoder@coder.com")
     }
     res.send({ status: 'success', message: 'login success' })
@@ -57,6 +58,7 @@ router.get('/github-callback', passport.authenticate('github', { failureRedirect
     last_name: req.user.last_name,
     email: req.user.email,
     age: req.user.age,
+    cart: req.user.cart,
     isAdmin:(req.user.email=="adminCoder@coder.com")
 }  
   res.redirect('/');

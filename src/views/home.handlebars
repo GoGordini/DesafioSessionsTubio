@@ -1,8 +1,8 @@
 <div id="container">
       {{#if user.isAdmin }}
-     <p>Welcome {{user.first_name}}. You are logged in as admin!</p>
+     <p>Welcome {{user.first_name}}. You are logged in as admin! </p>
      {{else}}
-     <p>Welcome {{user.first_name}}. You are logged in as user!</p>
+     <p>Welcome {{user.first_name}}. You are logged in as user! Your cart is {{user.cart._id}}</p>
      {{/if}}     
      <a href="/api/sessions/logout"><button>Salir</button></a>
      {{#each products}}
@@ -16,7 +16,7 @@
                 <li>category: {{this.category}}</li>
 </ul>
      {{!-- <div><button onclick="addToCart(this._id)">Agregar al carrito</button></div> --}}
-   <div>  <button class="addButton" id="{{this._id}}" onclick="addToCart('{{this._id}}')">Agregar al carrito</button></div>
+   <div>  <button class="addButton" id="{{this._id}}" onclick="addToCart('{{this._id}}','{{user.cart._id}}')">Agregar al carrito</button></div>
      </br>
      {{/each}}
      {{#if hasPrevPage }}
