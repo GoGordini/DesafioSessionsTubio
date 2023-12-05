@@ -1,7 +1,8 @@
 const addToCart = (_id,cid) => {
     const amount = {"quantity":1};
-    console.log("CID: ",cid);
-    fetch(`/api/carts/656e5df2ca10114c86b3e600/products/${_id}`, {
+    //console.log("CID: ",cid);
+    //debajo cambiar el carrito harcodeado por ${cid}
+    fetch(`/api/carts/${cid}/products/${_id}`, {
     method: 'PUT',
     body: JSON.stringify(amount),
     headers: {
